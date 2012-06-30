@@ -1,0 +1,12 @@
+mixin tileRow(files, imgURL, boardClass, boardTileClass, boardFirstTileClass)
+  - for (var tileIndex = 0; tileIndex < files; tileIndex += 1) {
+    //- each tile image is inside a list item
+    li(class=[boardClass, boardTileClass])
+      if !tileIndex
+        //- with hex maps, we pad the space between elements, and do not pad the first
+        //- but we presume this class detail is the responsibility of the caller
+        img(class=[boardClass, boardTileClass, boardFirstTileClass], src=imgURL)
+      else
+        img(class=[boardClass, boardTileClass], src=imgURL)
+  - }
+  
