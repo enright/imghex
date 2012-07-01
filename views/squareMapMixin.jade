@@ -1,5 +1,4 @@
 include tileRowMixin
-
 mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
   //- scoped css typing is used throughout, but is not likely to be respected by the browser
   style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; margin-left:0px; }'
@@ -10,6 +9,6 @@ mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass, boardR
     style(type='text/css', scoped)= 'ol.' + boardRowClass + '-' + rowIndex + '{ position:absolute; top:' + rowIndex*height + 'px; }';
     //- rows of tiles are contained in a list
     ol(class=[boardClass, boardRowClass, boardRowClass + '-' + rowIndex])
-      //- create the list elements for the row of tiles
+      //- create the list elements for the row of tiles - no first tile class
       mixin tileRow(files, defaultImageURL, boardClass, boardTileClass, '')
   - }
