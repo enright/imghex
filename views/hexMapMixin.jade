@@ -1,12 +1,17 @@
 include tileRowMixin
-
 mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardRowEvenClass, boardRowOddClass, boardTileClass, boardFirstTileClass)
   //- scoped css typing is used throughout, but is not likely to be respected by the browser
+  //- space between tiles is half of a tile width
   style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; margin-left:' + width/2 + 'px; }'
+  //- first tile has no margin - order of definition is important! 
   style(type='text/css', scoped)= 'img.' + boardFirstTileClass + ' { margin-left:0px; }'
+  //- rows have no style
   style(type='text/css', scoped)= 'ol.' + boardRowClass + ' { list-style-type:none; margin:0; }'
+  //- odd rows are flush left
   style(type='text/css', scoped)= 'ol.' + boardRowOddClass + ' { padding:0px; height:' + height + 'px; }'
+  //- even rows (0 is the first row and is even) are padded 3/4 of a tile width
   style(type='text/css', scoped)= 'ol.' + boardRowEvenClass + ' { padding-left:' + (width*3)/4 + 'px; height:' + width + 'px; }'
+  //- each tile list item is inline
   style(type='text/css', scoped)= 'li.' + boardTileClass + ' { display:inline; }'
   - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
     //- each row is 1/2 of a tile height below the previous
