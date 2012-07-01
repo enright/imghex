@@ -5,17 +5,18 @@ html
     style(type='text/css') div.map { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js')
     script(src='jade/runtime.min.js')
+    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }  
   body
     //- map.jade builds the hex board
     include hexMapMixin
-    div#mapList(class='map')
-      div(style='width:' + (board.files * ((tile.width * 3)/2) + tile.width/4) + 'px; height:' + (tile.height/2) * (board.ranks + 1) + 'px; padding:2px; position:relative;')
+    div#mapList(class='map-container')
+      div(style='width:' + (board.files * ((tile.width * 3)/2) + tile.width/4) + 'px; height:' + (tile.height/2) * (board.ranks + 1) + 'px; position:relative;')
         mixin hexMap(board.ranks, board.files, tile.width, tile.height, 'tileImages/grassField.png', 'board', 'board-row', 'board-row-even', 'board-row-odd', 'board-tile', 'board-tile-first')
-    div#anotherMap(class='map')
-      div(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; padding:2px; position:relative;')
+    div#anotherMap(class='map-container')
+      div(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
         mixin hexMap(6, 12, 32, 32, 'tileImages/redCraters.png', 'b', 'br', 'bre', 'bro', 'bt', 'btf')
-    div#clientSideMap(class='map')
-      div#fillFromClient(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; padding:2px; position:relative;')
+    div#clientSideMap(class='map-container')
+      div#fillFromClient(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
     script var createMapFromTemplate = !{mapTemplate}
     p
       label Rows:

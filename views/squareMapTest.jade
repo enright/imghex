@@ -5,16 +5,17 @@ html
     style(type='text/css') div.map { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js')
     script(src='jade/runtime.min.js')
+    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
   body
     //- map.jade builds the hex board
     include squareMapMixin
-    div#mapList(class='map')
+    div#mapList(class='map-container')
       div(style='width:' + (board.files * tile.width) + 'px; height:' + (board.ranks * tile.height) + 'px; position:relative;')
         mixin squareMap(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'board', 'board-row', 'board-tile')
-    div#anotherMap(class='map')
+    div#anotherMap(class='map-container')
       div(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
         mixin squareMap(6, 12, 32, 32, 'tileImages/Open Square Path Cross.jpg', 'b', 'br', 'bt')
-    div#clientSideMap(class='map')
+    div#clientSideMap(class='map-container')
       div#fillFromClient(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
     script var createMapFromTemplate = !{mapTemplate}
     p
