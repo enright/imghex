@@ -39,22 +39,24 @@ app.get('/testHexMap', function(req, res) {
 		    width: 72
 		},
 		// minified jade template for creating client-side maps is available as a local
-		mapTemplate: hexMap.clientHexMapTemplate
+		mapTemplate: hexMap.clientHexMapTemplate,
+		mapDivTemplate: hexMap.clientHexMapDivTemplate
 	})
 });
 
 app.get('/testSquareMap', function(req, res) {
     res.render('squareMapTest', { layout: false,
 		board: { 
-		    ranks: 8,
-		    files: 6
+		    ranks: 4,
+		    files: 5
 		},
 		tile: {
-		    height: 64,
+		    height: 58,
 		    width: 64
 		},
 		// minified jade template for creating client-side maps is available as a local
-		mapTemplate: hexMap.clientSquareMapTemplate
+		mapTemplate: hexMap.clientSquareMapTemplate,
+		mapDivTemplate: hexMap.clientSquareMapDivTemplate
 	})
 });
 
