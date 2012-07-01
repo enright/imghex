@@ -1,0 +1,15 @@
+include tileRowMixin
+
+mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
+  //- scoped css typing is used throughout, but is not likely to be respected by the browser
+  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; margin-left:0px; }'
+  style(type='text/css', scoped)= 'ol.' + boardRowClass + ' { list-style-type:none; margin:0; padding:0px; height:' + height + 'px; }'
+  style(type='text/css', scoped)= 'li.' + boardTileClass + ' { display:inline; }'
+  - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
+    //- each row is 1/2 of a tile height below the previous
+    style(type='text/css', scoped)= 'ol.' + boardRowClass + '-' + rowIndex + '{ position:absolute; top:' + rowIndex*height + 'px; }';
+    //- rows of tiles are contained in a list
+    ol(class=[boardClass, boardRowClass, boardRowClass + '-' + rowIndex])
+      //- create the list elements for the row of tiles
+      mixin tileRow(files, defaultImageURL, boardClass, boardTileClass, '')
+  - }
