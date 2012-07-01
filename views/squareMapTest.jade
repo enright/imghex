@@ -1,41 +1,76 @@
 !!!
 html
   head
-    //- this is for the div that contains the map
-    style(type='text/css') div.map { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js')
+    //- support for jade client-side templates
     script(src='jade/runtime.min.js')
+    //- all our maps are surrounded by a radius-border, 2-pixel frame
     style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
   body
-    //- map.jade builds the hex board
+    //- we want to use our templates
     include squareMapMixin
-    div#mapList(class='map-container')
-      div(style='width:' + (board.files * tile.width) + 'px; height:' + (board.ranks * tile.height) + 'px; position:relative;')
-        mixin squareMap(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'board', 'board-row', 'board-tile')
+    include squareMapDivMixin
+    
+    div#aMap(class='map-container')
+      //- create a div containing the map, the div is sized by rank and file, width and height
+      mixin squareMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'square-map-div', 'board', 'board-row', 'board-tile')
+    
     div#anotherMap(class='map-container')
+      //- here we create the containing div ourselves, presuming that we know the size it needs
       div(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
         mixin squareMap(6, 12, 32, 32, 'tileImages/Open Square Path Cross.jpg', 'b', 'br', 'bt')
+    
+    label Rows:
+    select#numberOfRows
+      option 4
+      option 5
+      option 6
+    label Columns:
+    select#numberOfColumns
+      option 6
+      option 8
+      option 10
+      option 12
+      option 14
+      option 16
+    a#createMap(href="createMap") Build the map client-side. Place it in the div.
     div#clientSideMap(class='map-container')
-      div#fillFromClient(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
+      //- a client-side map will go into this div
+      div#fillFromClient(style='background-color:blue; width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;') 
+    
+    label Rows:
+    select#numberOfRowsInDiv
+      option 4
+      option 5
+      option 6
+      option 7
+      option 8
+      option 9
+      option 10
+      option 11
+    label Columns:
+    select#numberOfColumnsInDiv
+      option 6
+      option 8
+      option 10
+      option 12
+      option 14
+      option 16
+    a#createMapDiv(href="createMapDiv") Build the map div client-side. Size of div adjusts as needed.
+    //- a client-sid div containing the map will go into this div. Will adjust to content size
+    div#clientSideMapDiv(class='map-container')
+    
     script var createMapFromTemplate = !{mapTemplate}
-    p
-      label Rows:
-      select#numberOfRows
-        option 4
-        option 5
-        option 6
-    p
-      label Columns:
-      select#numberOfColumns
-        option 6
-        option 8
-        option 10
-    a#createMap(href="createMap") Build the map.
+    script var createMapDivFromTemplate = !{mapDivTemplate}
+    
     script
       $(document).ready(function(){
         var createMapAnchor = $("#createMap"),
+          createMapDivAnchor =$('#createMapDiv'),
           numberOfRows = $('#numberOfRows'),
-          numberOfColumns = $('#numberOfColumns');
+          numberOfColumns = $('#numberOfColumns'),
+          numberOfRowsInDiv = $('#numberOfRowsInDiv'),
+          numberOfColumnsInDiv = $('#numberOfColumnsInDiv');
         createMapAnchor.click(function(event){
           // don't process the click normally
           event.preventDefault();
@@ -49,6 +84,24 @@ html
             boardRowClass: 'cr',
             boardTileClass: 'ct'
           });
+          $('#fillFromClient').empty();
           $('#fillFromClient').append(renderedTemplate);
         });
+        createMapDivAnchor.click(function(event){
+          // don't process the click normally
+          event.preventDefault();
+          var renderedTemplate = createMapDivFromTemplate({ 
+            ranks: numberOfRowsInDiv[0].value, 
+            files: numberOfColumnsInDiv[0].value, 
+            width: 32,
+            height: 32,
+            defaultImageURL: 'tileImages/Open Square Path Grass.jpg',
+            divClass: 'd',
+            boardClass: 'c', 
+            boardRowClass: 'cr',
+            boardTileClass: 'ct'
+          });
+          $('#clientSideMapDiv').empty();
+          $('#clientSideMapDiv').append(renderedTemplate);
+        });      
       });
