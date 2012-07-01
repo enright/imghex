@@ -1,0 +1,53 @@
+!!!
+html
+  head
+    //- this is for the div that contains the map
+    style(type='text/css') div.map { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js')
+    script(src='jade/runtime.min.js')
+  body
+    //- map.jade builds the hex board
+    include squareMapMixin
+    div#mapList(class='map')
+      div(style='width:' + (board.files * tile.width) + 'px; height:' + (board.ranks * tile.height) + 'px; position:relative;')
+        mixin squareMap(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'board', 'board-row', 'board-tile')
+    div#anotherMap(class='map')
+      div(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
+        mixin squareMap(6, 12, 32, 32, 'tileImages/Open Square Path Cross.jpg', 'b', 'br', 'bt')
+    div#clientSideMap(class='map')
+      div#fillFromClient(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
+    script var createMapFromTemplate = !{mapTemplate}
+    p
+      label Rows:
+      select#numberOfRows
+        option 4
+        option 5
+        option 6
+    p
+      label Columns:
+      select#numberOfColumns
+        option 6
+        option 8
+        option 10
+    a#createMap(href="createMap") Build the map.
+    script
+      $(document).ready(function(){
+        var createMapAnchor = $("#createMap"),
+          numberOfRows = $('#numberOfRows'),
+          numberOfColumns = $('#numberOfColumns');
+        createMapAnchor.click(function(event){
+          // don't process the click normally
+          event.preventDefault();
+          var renderedTemplate = createMapFromTemplate({ 
+            ranks: numberOfRows[0].value, 
+            files: numberOfColumns[0].value, 
+            width: 32,
+            height: 32,
+            defaultImageURL: 'tileImages/Open Square Path Grass.jpg',
+            boardClass: 'c', 
+            boardRowClass: 'cr',
+            boardTileClass: 'ct'
+          });
+          $('#fillFromClient').append(renderedTemplate);
+        });
+      });
