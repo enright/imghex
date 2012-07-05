@@ -1,36 +1,29 @@
-var express,
-	connect,
-	jade,
-	uglify,
-	ug_parser,
-	ug_uglify,
-	app;
-		
-express = require('express');
-jade = require('jade');
-hexMap = require('./lib/imghex');
-
-app = express.createServer();
+var express = require('express'),
+	jade = require('jade'),
+	app = express.createServer(),
+    // pass in jade compile options here, when we gen code after squeezing...beautify it
+    hexMap = require('./lib/imghex')({ filename: __dirname + '/views/.', compileDebug: false, client: true }, undefined, undefined, { beautify: true });
 
 // Configuration
-app.configure(function(){
-  // use jade
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  
-  app.use(app.router);
-  
-  // serve up tile images
-  app.use(express.static(__dirname + '/public'));
-  // serve up jade so can get the runtime.min.js
-  app.use('/jade', express.static(__dirname + '/node_modules/jade'));
+app.configure(function () {
+    // use jade
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+
+    app.use(app.router);
+
+    // serve up tile images
+    app.use(express.static(__dirname + '/public'));
+    // serve up jade so can get the runtime.min.js
+    app.use('/jade', express.static(__dirname + '/node_modules/jade'));
 });
 
-app.get('/testHexMap', function(req, res) {
-    res.render('hexMapTest', { layout: false,
-		board: { 
+app.get('/testHexMap', function (req, res) {
+    res.render('hexMapTest', {
+        layout: false,
+		board: {
 		    ranks: 12,
 		    files: 4
 		},
@@ -39,14 +32,16 @@ app.get('/testHexMap', function(req, res) {
 		    width: 72
 		},
 		// minified jade template for creating client-side maps is available as a local
-		mapTemplate: hexMap.clientHexMapTemplate,
-		mapDivTemplate: hexMap.clientHexMapDivTemplate
-	})
+		mapTemplate: hexMap.hexMapTemplate(),
+		mapDivTemplate: hexMap.hexMapDivTemplate()
+	});
 });
 
-app.get('/testSquareMap', function(req, res) {
-    res.render('squareMapTest', { layout: false,
-		board: { 
+app.get('/testSquareMap', function (req, res) {
+    console.log(hexMap.squareMapTemplate());
+    res.render('squareMapTest', {
+        layout: false,
+		board: {
 		    ranks: 4,
 		    files: 5
 		},
@@ -55,9 +50,9 @@ app.get('/testSquareMap', function(req, res) {
 		    width: 64
 		},
 		// minified jade template for creating client-side maps is available as a local
-		mapTemplate: hexMap.clientSquareMapTemplate,
-		mapDivTemplate: hexMap.clientSquareMapDivTemplate
-	})
+		mapTemplate: hexMap.squareMapTemplate(),
+		mapDivTemplate: hexMap.squareMapDivTemplate()
+	});
 });
 
 console.log("Express version %s\n", express.version);
