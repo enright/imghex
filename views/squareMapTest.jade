@@ -5,7 +5,7 @@ html
     //- support for jade client-side templates
     script(src='jade/runtime.min.js')
     //- all our maps are surrounded by a radius-border, 2-pixel frame
-    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
+    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; overflow:scroll; }
   body
     //- we want to use our templates
     include squareMapMixin
