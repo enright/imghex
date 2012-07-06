@@ -5,7 +5,7 @@ html
     //- support for jade client-side templates
     script(src='jade/runtime.min.js')
     //- all our maps are surrounded by a radius-border, 2-pixel frame
-    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; }
+    style(type='text/css') div.map-container { background-color:gray; border:2px; border-radius:4px; padding:2px; margin:2px; position:relative; overflow:scroll; }
   body
     //- we want to use our templates
     include hexMapMixin
@@ -42,6 +42,14 @@ html
       option 9
       option 10
       option 11
+      option 12
+      option 13
+      option 14
+      option 15
+      option 16
+      option 17
+      option 18
+      option 19
     label Columns:
     select#numberOfColumnsInDiv
       option 6
@@ -50,6 +58,10 @@ html
       option 12
       option 14
       option 16
+      option 17
+      option 18
+      option 19
+      option 20
     label Width:
     select#widthOfTiles
       option 32
