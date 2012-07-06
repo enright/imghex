@@ -38,7 +38,6 @@ app.get('/testHexMap', function (req, res) {
 });
 
 app.get('/testSquareMap', function (req, res) {
-    console.log(hexMap.squareMapTemplate());
     res.render('squareMapTest', {
         layout: false,
 		board: {
