@@ -12,11 +12,11 @@ html
     include hexMapDivMixin
     
     div#aMap(class='map-container')
-      mixin hexMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/grassField.png', 'hexMapDiv', 'board', 'board-row', 'board-row-even', 'board-row-odd', 'board-tile', 'board-tile-first')
+      mixin hexMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/grassField.png', 'hexMapDiv', 'board', 'board-row', 'board-tile')
     
     div#anotherMap(class='map-container')
       div(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
-        mixin hexMap(6, 12, 32, 32, 'tileImages/redCraters.png', 'b', 'br', 'bre', 'bro', 'bt', 'btf')
+        mixin hexMap(6, 12, 32, 32, 'tileImages/redCraters.png', 'b', 'br', 'bt')
     
     label Rows:
     select#numberOfRows
@@ -99,11 +99,8 @@ html
             height: 32,
             defaultImageURL: 'tileImages/roughTerrain.png',
             boardClass: 'd', 
-            boardRowClass: 'dr', 
-            boardRowEvenClass: 'dre', 
-            boardRowOddClass: 'dro', 
-            boardTileClass: 'dt', 
-            boardFirstTileClass: 'dtf' 
+            boardRowClass: 'dr',
+            boardTileClass: 'dt'
           });
           $('#fillFromClient').empty();
           $('#fillFromClient').append(renderedTemplate);
@@ -119,11 +116,8 @@ html
             defaultImageURL: 'tileImages/roughTerrain.png',
             divClass: 'hexMapDivFresh',
             boardClass: 'c', 
-            boardRowClass: 'cr', 
-            boardRowEvenClass: 'cre', 
-            boardRowOddClass: 'cro', 
-            boardTileClass: 'ct', 
-            boardFirstTileClass: 'ctf' 
+            boardRowClass: 'cr',
+            boardTileClass: 'ct'
           });
           $('#clientSideMapDiv').empty();
           $('#clientSideMapDiv').append(renderedTemplate);

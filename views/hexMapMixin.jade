@@ -1,29 +1,34 @@
-include tileRowMixin
-mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardRowEvenClass, boardRowOddClass, boardTileClass, boardFirstTileClass)
+include hexTileRowMixin
+mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
   //- scoped css typing is used throughout, but is not likely to be respected by the browser
-  //- space between tiles is half of a tile width
-  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; margin-left:' + width/2 + 'px; }'
-  //- first tile has no margin - order of definition is important! 
-  style(type='text/css', scoped)= 'img.' + boardFirstTileClass + ' { margin-left:0px; }'
-  //- rows have no style
-  style(type='text/css', scoped)= 'ol.' + boardRowClass + ' { list-style-type:none; margin:0; }'
-  //- odd rows are flush left
-  style(type='text/css', scoped)= 'ol.' + boardRowOddClass + ' { padding:0px; height:' + height + 'px; }'
-  //- even rows (0 is the first row and is even) are padded 3/4 of a tile width
-  style(type='text/css', scoped)= 'ol.' + boardRowEvenClass + ' { padding-left:' + (width*3)/4 + 'px; height:' + width + 'px; }'
+  //- tile class sets width and height
+  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; }'
+  //- rows have no style, no margin, no padding, and a height of a tile
+  style(type='text/css', scoped)= 'ol.' + boardRowClass + ' { list-style-type:none; margin:0; padding:0px; height:' + height + 'px; }'
   //- each tile list item is inline
   style(type='text/css', scoped)= 'li.' + boardTileClass + ' { display:inline; }'
+  
+  //- create styles for absolute placement of tiles in rows
+  //- even rows are offset
+  evenRowOffset = (width*3)/4
+  - for (var colIndex = 0; colIndex < files; colIndex += 1) {
+    //- where the left side of the tile will be for this column
+    left = colIndex*(width*3)/2
+    //- tiles in even rows (0, 2, 4...) are offset to the right by 3/4 tile width
+    style(type='text/css', scoped)= 'img.' + boardTileClass + '-even-' + colIndex + '{ position:absolute; left:' + (left + evenRowOffset) + 'px; }';
+    style(type='text/css', scoped)= 'img.' + boardTileClass + '-odd-' + colIndex + '{ position:absolute; left:' + left + 'px; }';
+  - }
+  
+  //- create all the rows
   - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
-    //- each row is 1/2 of a tile height below the previous
-    style(type='text/css', scoped)= 'ol.' + boardRowClass + '-' + rowIndex + '{ position:absolute; top:' + rowIndex*(height/2) + 'px; }';
-    if rowIndex%2
-      //- rows of tiles are contained in a list
-      //- odd rows (row 1, an odd row, is the second row) are flush left
-      ol(class=[boardClass, boardRowClass, boardRowOddClass, boardRowClass + '-' + rowIndex])
-        //- create the list elements for the row of tiles
-        mixin tileRow(files, defaultImageURL, boardClass, boardTileClass, boardFirstTileClass)
-    else
-      //- even rows (row 0, 2, etc.) are padded on the left (see boardRowEvenClass above)
-      ol(class=[boardClass, boardRowClass, boardRowEvenClass, boardRowClass + '-' + rowIndex])
-        mixin tileRow(files, defaultImageURL, boardClass, boardTileClass, boardFirstTileClass)
+    //- position each subsequent row 1/2 tile height under the previous
+    boardRowID = boardRowClass + '-' + rowIndex
+    style(type='text/css', scoped)= 'ol.' + boardRowID + '{ position:absolute; top:' + rowIndex*(height/2) + 'px; }';
+    ol(class=[boardClass, boardRowClass, boardRowID])
+      if rowIndex%2
+        //- tiles in odd rows are flush left
+        mixin hexTileRow(files, 'odd', defaultImageURL, boardClass, boardTileClass)
+      else
+        //- tiles in even rows (row 0, 2, etc.) are shifted to the left
+        mixin hexTileRow(files, 'even', defaultImageURL, boardClass, boardTileClass)
   - }

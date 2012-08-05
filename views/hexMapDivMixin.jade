@@ -1,6 +1,6 @@
 include hexMapMixin
-mixin hexMapDiv(ranks, files, width, height, defaultImageURL, divClass, boardClass, boardRowClass, boardRowEvenClass, boardRowOddClass, boardTileClass, boardFirstTileClass)
+mixin hexMapDiv(ranks, files, width, height, defaultImageURL, divClass, boardClass, boardRowClass, boardTileClass)
   //- need to force ranks to be a number with 'ranks*1' (if ranks is a string the ' + 1' would concat '1' to it)
   style(type='text/css', scoped)= 'div.' + divClass + '{ width:' + (files * ((width * 3)/2) + width/4) + 'px; height:' + ((height/2) * (ranks*1 + 1)) + 'px; position:relative; }'
   div(class=divClass)
-    mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardRowEvenClass, boardRowOddClass, boardTileClass, boardFirstTileClass)
+    mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
