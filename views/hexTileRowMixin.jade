@@ -1,7 +1,10 @@
-mixin hexTileRow(files, oddOrEven, imgURL, boardClass, boardTileClass)
+mixin hexTileRow(files, oddOrEven, imgURL, boardClass, boardTileClass, boardRankId, boardFileClassBase)
   - for (var tileIndex = 0; tileIndex < files; tileIndex += 1) {
-    boardTilePlacementClass = boardTileClass + '-' + oddOrEven + '-' + tileIndex
+    //- this must match the style created in the caller
+    horizontalPlacement = boardFileClassBase + '-' + oddOrEven + '-' + tileIndex
+    //- this tells us which file the li and img are in
+    boardFileId = boardFileClassBase + '-' + tileIndex
     //- each tile image is inside a list item
-    li(class=[boardClass, boardTileClass])
-      img(class=[boardClass, boardTileClass, boardTilePlacementClass], src=imgURL)
+    li(class=[boardClass, boardRankId, boardFileId])
+      img(class=[boardClass, boardTileClass, boardRankId, boardFileId, horizontalPlacement], src=imgURL)
   - }
