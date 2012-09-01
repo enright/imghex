@@ -13,12 +13,12 @@ html
     
     div#aMap(class='map-container')
       //- create a div containing the map, the div is sized by rank and file, width and height
-      mixin squareMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'square-map-div', 'board', 'board-row', 'board-tile')
+      mixin squareMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/Open Square Path Grass.jpg', 'square-map-div', 'board')
     
     div#anotherMap(class='map-container')
       //- here we create the containing div ourselves, presuming that we know the size it needs
       div(style='width:' + (12 * 32) + 'px; height:' + (6 * 32) + 'px; position:relative;')
-        mixin squareMap(6, 12, 32, 32, 'tileImages/Open Square Path Cross.jpg', 'b', 'br', 'bt')
+        mixin squareMap(6, 12, 32, 32, 'tileImages/Open Square Path Cross.jpg', 'b')
     
     label Rows:
     select#numberOfRows
@@ -80,9 +80,7 @@ html
             width: 32,
             height: 32,
             defaultImageURL: 'tileImages/Open Square Path Grass.jpg',
-            boardClass: 'c', 
-            boardRowClass: 'cr',
-            boardTileClass: 'ct'
+            boardClass: 'c'
           });
           $('#fillFromClient').empty();
           $('#fillFromClient').append(renderedTemplate);
@@ -97,9 +95,7 @@ html
             height: 32,
             defaultImageURL: 'tileImages/Open Square Path Grass.jpg',
             divClass: 'd',
-            boardClass: 'c', 
-            boardRowClass: 'cr',
-            boardTileClass: 'ct'
+            boardClass: 'c'
           });
           $('#clientSideMapDiv').empty();
           $('#clientSideMapDiv').append(renderedTemplate);
