@@ -1,0 +1,7 @@
+mixin squareTileRow(files, imgURL, boardClass, boardTileClass, boardRankId, boardFileClassBase)
+  - for (var f = 0; f < files; f += 1) {
+    boardFileId = boardFileClassBase + '-' + f
+    //- each tile image is inside a list item
+    li(class=[boardClass, boardRankId, boardFileId])
+      img(class=[boardClass, boardTileClass, boardRankId, boardFileId], src=imgURL)
+  - }
