@@ -56,5 +56,5 @@ app.get('/testSquareMap', function (req, res) {
 
 console.log("Express version %s\n", express.version);
 app.listen(3001);
-console.log("Express server listening on port %d\n", app.address().port);
+//console.log("Express server listening on port %d\n", app.address().port);
 
