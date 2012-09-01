@@ -1,14 +1,33 @@
-include tileRowMixin
-mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
-  //- scoped css typing is used throughout, but is not likely to be respected by the browser
-  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; margin-left:0px; }'
-  style(type='text/css', scoped)= 'ol.' + boardRowClass + ' { list-style-type:none; margin:0; padding:0px; height:' + height + 'px; }'
-  style(type='text/css', scoped)= 'li.' + boardTileClass + ' { display:inline; }'
-  - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
-    //- each row is 1/2 of a tile height below the previous
-    style(type='text/css', scoped)= 'ol.' + boardRowClass + '-' + rowIndex + '{ position:absolute; top:' + rowIndex*height + 'px; }';
-    //- rows of tiles are contained in a list
-    ol(class=[boardClass, boardRowClass, boardRowClass + '-' + rowIndex])
-      //- create the list elements for the row of tiles - no first tile class
-      mixin tileRow(files, defaultImageURL, boardClass, boardTileClass, '')
+include squareTileRowMixin
+mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass)
+  boardRankClassBase = boardClass + '-rank'
+  boardFileClassBase = boardClass + '-file'
+  boardTileClass = boardClass + '-tile'
+
+  //- scoped css typing is used throughout, but scoping is not likely to be respected by the browser
+  //- use different boardClass names if displaying more than one map
+
+  //- tile class sets width and height of tiles
+  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; }'
+  //- the list of tiles has no style, no margin, no padding
+  style(type='text/css', scoped)= 'ol.' + boardClass + ' { list-style-type:none; margin:0; padding:0px; }'
+
+  //- create styles for placement of top of tiles in each rank
+  - for (var r = 0; r < ranks; r += 1) {
+    //- position each subsequent row under the previous
+    boardRowID = boardRankClassBase + '-' + r
+    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*height + 'px; }';
   - }
+
+  //- create styles for placement of left side of tiles in each file
+  - for (var f = 0; f < files; f += 1) {
+    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-' + f + ' { position:absolute; left:' + f*width + 'px; }';
+  - }
+
+  //- one ordered list contains all rows of tiles
+  ol(class=boardClass)
+    - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
+      boardRowID = boardRankClassBase + '-' + rowIndex
+      //- create the list elements for the row of tiles
+      mixin squareTileRow(files, defaultImageURL, boardClass, boardTileClass, boardRowID, boardFileClassBase)
+    - }

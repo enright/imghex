@@ -1,5 +1,5 @@
 include squareMapMixin
-mixin squareMapDiv(ranks, files, width, height, defaultImageURL, divClass, boardClass, boardRowClass, boardTileClass)
+mixin squareMapDiv(ranks, files, width, height, defaultImageURL, divClass, boardClass)
   style(type='text/css', scoped)= 'div.' + divClass + ' { width:' + (files * width) + 'px; height:' + (ranks * height) + 'px; position:relative; }'
   div(class=divClass)
-    mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass, boardRowClass, boardTileClass)
+    mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass)
