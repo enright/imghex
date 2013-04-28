@@ -16,12 +16,12 @@ mixin squareMap(ranks, files, width, height, defaultImageURL, boardClass)
   - for (var r = 0; r < ranks; r += 1) {
     //- position each subsequent row under the previous
     boardRowID = boardRankClassBase + '-' + r
-    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*height + 'px; }';
+    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*height + 'px; }'
   - }
 
   //- create styles for placement of left side of tiles in each file
   - for (var f = 0; f < files; f += 1) {
-    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-' + f + ' { position:absolute; left:' + f*width + 'px; }';
+    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-' + f + ' { position:absolute; left:' + f*width + 'px; }'
   - }
 
   //- one ordered list contains all rows of tiles

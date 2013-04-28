@@ -16,7 +16,7 @@ mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass)
   - for (var r = 0; r < ranks; r += 1) {
     //- position each subsequent row 1/2 tile height under the previous
     boardRowID = boardRankClassBase + '-' + r
-    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*(height/2) + 'px; }';
+    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*(height/2) + 'px; }'
   - }
 
   //- create styles for absolute placement of left side of tiles in each file
@@ -26,8 +26,8 @@ mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass)
     //- where the left side of the tile will be for this column
     left = colIndex*(width*3)/2
     //- tiles in even rows (0, 2, 4...) are offset to the right by 3/4 tile width
-    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-even-' + colIndex + ' { position:absolute; left:' + (left + evenRowOffset) + 'px; }';
-    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-odd-' + colIndex + ' { position:absolute; left:' + left + 'px; }';
+    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-even-' + colIndex + ' { position:absolute; left:' + (left + evenRowOffset) + 'px; }'
+    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-odd-' + colIndex + ' { position:absolute; left:' + left + 'px; }'
   - }
 
   //- one ordered list contains all rows of tiles
