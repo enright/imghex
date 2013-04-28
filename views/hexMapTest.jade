@@ -15,7 +15,8 @@ html
       mixin hexMapDiv(board.ranks, board.files, tile.width, tile.height, 'tileImages/grassField.png', 'hexMapDiv', 'board')
     
     div#anotherMap(class='map-container')
-      div(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
+      //-  div(style='width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
+      div(style='width:672px; height:112px; position:relative;')
         mixin hexMap(6, 12, 32, 32, 'tileImages/redCraters.png', 'b')
     
     label Rows:
@@ -30,7 +31,8 @@ html
       option 10
     a#createMap(href="createMap") Build the map client-side. Place it in the div.
     div#clientSideMap(class='map-container')
-      div#fillFromClient(style='background-color:blue width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
+      //-  div#fillFromClient(style='background-color:blue width:' + (12 * ((32 * 3)/2) + 32/4) + 'px; height:' + (32/2) * (6 + 1) + 'px; position:relative;')
+      div#fillFromClient(style='background-color:blue width:672px; height:112px; position:relative;')
     
     label Rows:
     select#numberOfRowsInDiv
