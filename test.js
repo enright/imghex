@@ -1,8 +1,10 @@
 var express = require('express'),
+	http = require('http'),
 	jade = require('jade'),
-	app = express.createServer(),
+	app = express(),
+	server = http.createServer(app),
     // pass in jade compile options here, when we gen code after squeezing...beautify it
-    hexMap = require('./lib/imghex')({ filename: __dirname + '/views/.', compileDebug: false, client: true }, undefined, undefined, { beautify: true });
+    hexMap = require('./lib/imghex')({ filename: __dirname + '/views/.', compileDebug: true, client: true }, undefined, undefined, { beautify: true });
 
 // Configuration
 app.configure(function () {
@@ -10,7 +12,6 @@ app.configure(function () {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
-    app.use(express.methodOverride());
 
     app.use(app.router);
 
@@ -55,6 +56,6 @@ app.get('/testSquareMap', function (req, res) {
 });
 
 console.log("Express version %s\n", express.version);
-app.listen(3001);
+app.listen(5001);
 //console.log("Express server listening on port %d\n", app.address().port);
 
