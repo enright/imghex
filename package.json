@@ -1,7 +1,7 @@
 {
     "name": "imghex",
-    "description": "create hex tile maps with img elements",
-    "version": "0.0.4",
+    "description": "create square and hex tile maps with svg image elements",
+    "version": "0.0.5",
     "author": "Bill Enright <bill@yisup.com>",
     "repository": "git://github.com/enright/imghex",
     "main": "./index",

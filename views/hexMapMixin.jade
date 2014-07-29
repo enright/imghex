@@ -1,44 +1,20 @@
-include hexTileRowMixin
-mixin hexMap(ranks, files, width, height, defaultImageURL, boardClass)
-  boardRankClassBase = boardClass + '-rank'
-  boardFileClassBase = boardClass + '-file'
-  boardTileClass = boardClass + '-tile'
-
-  //- scoped css typing is used throughout, but scoping is not likely to be respected by the browser
-  //- use different boardClass names if displaying more than one map
-
-  //- tile class sets width and height of tiles
-  style(type='text/css', scoped)= 'img.' + boardTileClass + ' { height:' + height + 'px; width:' + width + 'px; }'
-  //- the list of tiles has no style, no margin, no padding
-  style(type='text/css', scoped)= 'ol.' + boardClass + ' { list-style-type:none; margin:0; padding:0px; }'
-
-  //- create styles for placement of top of tiles in each rank
-  - for (var r = 0; r < ranks; r += 1) {
-    //- position each subsequent row 1/2 tile height under the previous
-    boardRowID = boardRankClassBase + '-' + r
-    style(type='text/css', scoped)= 'img.' + boardRowID + ' { position:absolute; top:' + r*(height/2) + 'px; }'
-  - }
-
-  //- create styles for absolute placement of left side of tiles in each file
-  //- even rows are offset from odd rows, this nests the rows of hexes together
-  evenRowOffset = (width*3)/4
-  - for (var colIndex = 0; colIndex < files; colIndex += 1) {
-    //- where the left side of the tile will be for this column
-    left = colIndex*(width*3)/2
-    //- tiles in even rows (0, 2, 4...) are offset to the right by 3/4 tile width
-    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-even-' + colIndex + ' { position:absolute; left:' + (left + evenRowOffset) + 'px; }'
-    style(type='text/css', scoped)= 'img.' + boardFileClassBase + '-odd-' + colIndex + ' { position:absolute; left:' + left + 'px; }'
-  - }
-
-  //- one ordered list contains all rows of tiles
-  ol(class=boardClass)
-    //- create all the rows
-    - for (var rowIndex = 0; rowIndex < ranks; rowIndex += 1) {
-      boardRowID = boardRankClassBase + '-' + rowIndex
-      if rowIndex%2
-        //- tiles in odd rows are flush left
-        mixin hexTileRow(files, 'odd', defaultImageURL, boardClass, boardTileClass, boardRowID, boardFileClassBase)
-      else
-        //- tiles in even rows (row 0, 2, etc.) are shifted to the left
-        mixin hexTileRow(files, 'even', defaultImageURL, boardClass, boardTileClass, boardRowID, boardFileClassBase)
+mixin hexMap(ranks, files, width, height, imgURL, boardClass)
+  - var boardTileClass = boardClass + '-tile';
+  - var imgHeight = height + 'px';
+  - var imgWidth = width + 'px';
+  //- even rows are offset right from odd rows, this nests the rows of hexes together
+  - var r, top, f, left, evenRowOffset = (width*3)/4;
+  
+  //- must provide height and width for the containing svg
+  svg(class=boardClass, height=((height/2) * (ranks*1 + 1)), width=(files * ((width * 3)/2) + width/4))
+    - for (r = 0; r < ranks; r += 1) {
+      //- position each subsequent row 1/2 tile height under the previous
+      - top = r*(height/2) + 'px';
+      - for (f = 0; f < files; f += 1) {
+        //- where the left side of the tile will be for this column
+        - left = f*(width*3)/2;
+        - left += r%2 ? 0 : evenRowOffset;
+        svg(class=boardTileClass, data-rank=r, data-file=f, x=left, y=top)
+          image(class=boardTileClass, xlink:href=imgURL, preserveAspectRatio="none", height=imgHeight, width=imgWidth)
+      - }
     - }
